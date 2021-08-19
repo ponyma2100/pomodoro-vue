@@ -97,6 +97,7 @@ export default {
   border: none;
   background: transparent;
   color: white;
+  outline-style: none;
 }
 
 .start-button,
