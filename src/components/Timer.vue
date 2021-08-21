@@ -1,8 +1,17 @@
 <template>
+  <div class="progress-container">
+    <div class="progress" :style="{ width: `${width}%` }"></div>
+  </div>
   <div class="timer">
     <span v-if="showTime">{{ display }}</span>
     <div v-else class="input-time">
-      <input v-model="setTime" type="text" placeholder="25" />
+      <input
+        v-model="setTime"
+        type="number"
+        placeholder="25"
+        max="60"
+        min="1"
+      />
       <span>:00</span>
     </div>
     <button v-if="!showTime" class="start-button" @click="handleStart">
@@ -20,12 +29,35 @@ export default {
     const display = ref("");
     const seconds = ref("");
     const minutes = ref("");
-    const setTime = ref("25");
+    const setTime = ref(25);
     const showTime = ref(false);
     let countdownActive;
 
+    const width = ref(0);
+    const perSec = ref(0);
+    let progressActive;
+
+    const getProgress = (miniutes) => {
+      perSec.value = 100 / miniutes;
+
+      progressActive = setInterval(() => {
+        if (width.value >= 100) {
+          clearInterval(progressActive);
+          width.value = 0;
+        } else {
+          width.value += perSec.value;
+        }
+      }, 1000);
+    };
+
     const handleStart = () => {
-      startTimer(setTime.value * 60);
+      if (!setTime.value || isNaN(setTime.value)) {
+        setTime.value = "25";
+        alert("請輸入正確時間");
+      } else {
+        startTimer(setTime.value * 60);
+        getProgress(setTime.value * 60);
+      }
     };
 
     const startTimer = (minutes) => {
@@ -48,8 +80,10 @@ export default {
 
     const handleStop = () => {
       clearInterval(countdownActive);
+      clearInterval(progressActive);
       showTime.value = false;
       display.value = "";
+      width.value = 0;
     };
 
     const render = (totalTime) => {
@@ -68,6 +102,7 @@ export default {
       display,
       setTime,
       showTime,
+      width,
     };
   },
 };
@@ -75,8 +110,8 @@ export default {
 
 <style scoped>
 .timer {
-  max-width: 500px;
-  font-size: 100px;
+  max-width: 600px;
+  font-size: 8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -87,13 +122,12 @@ export default {
 
 .input-time {
   display: flex;
-  font-size: 100px;
-  max-width: 300px;
+  font-size: 8rem;
 }
 .timer input {
-  width: 120px;
-  font-size: 100px;
-  text-align: right;
+  width: 10rem;
+  font-size: 8rem;
+  text-align: center;
   border: none;
   background: transparent;
   color: white;
@@ -116,6 +150,19 @@ export default {
 .start-button:hover,
 .stop-button:hover {
   filter: brightness(1.5);
+}
+
+.progress-container {
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 0.4rem;
+  max-width: 600px;
+  width: 18rem;
+}
+
+.progress {
+  height: 0.4rem;
+  background-color: white;
+  transition: width 0.4s ease;
 }
 </style>>
 

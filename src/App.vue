@@ -3,13 +3,14 @@
     class="container"
     :style="{ 'background-image': `url('${backgroundImage}')` }"
   >
+    <ProgressBar />
     <Timer />
   </div>
 </template>
 
 <script>
-import Timer from "./components/Timer";
 import { ref } from "vue";
+import Timer from "./components/Timer";
 // import getImage from "./composables/getImage";
 
 export default {
@@ -55,6 +56,7 @@ html {
 
 .container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
