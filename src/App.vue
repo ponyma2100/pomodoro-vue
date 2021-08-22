@@ -5,17 +5,19 @@
   >
     <ProgressBar />
     <Timer />
+    <Quote />
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
 import Timer from "./components/Timer";
+import Quote from "./components/Quote.vue";
 // import getImage from "./composables/getImage";
 
 export default {
   name: "App",
-  components: { Timer },
+  components: { Timer, Quote },
   setup() {
     const backgroundImage = ref("");
     const image = [
