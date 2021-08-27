@@ -127,7 +127,7 @@ export default {
 .timer input {
   width: 10rem;
   font-size: 8rem;
-  text-align: center;
+  text-align: right;
   border: none;
   background: transparent;
   color: white;

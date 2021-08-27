@@ -27,9 +27,7 @@ export default {
       "https://images.unsplash.com/photo-1518235506717-e1ed3306a89b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
       "https://images.unsplash.com/34/BA1yLjNnQCI1yisIZGEi_2013-07-16_1922_IMG_9873.jpg?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80",
     ];
-    // const { backgroundImage, load } = getImage();
 
-    // load();
     backgroundImage.value = image[Math.floor(Math.random() * 3)];
 
     return { backgroundImage };
@@ -73,5 +71,9 @@ html {
   position: absolute;
   top: 10px;
   right: 10px;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width: 80%;
 }
 </style>
