@@ -3,6 +3,7 @@
     class="container"
     :style="{ 'background-image': `url('${backgroundImage}')` }"
   >
+    <Weather />
     <ProgressBar />
     <Timer />
     <Quote />
@@ -13,11 +14,12 @@
 import { ref } from "vue";
 import Timer from "./components/Timer";
 import Quote from "./components/Quote.vue";
+import Weather from "./components/Weather.vue";
 // import getImage from "./composables/getImage";
 
 export default {
   name: "App",
-  components: { Timer, Quote },
+  components: { Timer, Quote, Weather },
   setup() {
     const backgroundImage = ref("");
     const image = [
@@ -29,6 +31,7 @@ export default {
 
     // load();
     backgroundImage.value = image[Math.floor(Math.random() * 3)];
+
     return { backgroundImage };
   },
 };
@@ -64,5 +67,11 @@ html {
   height: 100%;
   width: 100%;
   background-size: cover;
+}
+
+.weather {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 </style>
