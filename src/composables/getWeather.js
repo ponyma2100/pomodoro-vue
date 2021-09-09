@@ -6,8 +6,9 @@ const authorization = 'CWB-042511E5-4B1B-4F0B-B0E0-678048C3471E'
 const getWeather = () => {
   const locationData = ref([])
   const currentWeatherData = ref({})
-  const forecastWeatherData = ref({})
-
+  const forecastWeatherData = ref([])
+  const forecastWeatherGroupBy = ref([])
+  const dailyWeather = ref([])
 
   const getCurrentWeather = async (city) => {
     const base = `https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001`
@@ -49,34 +50,41 @@ const getWeather = () => {
       locationData.value = data.records.locations[0].location[0].weatherElement
 
       const weatherElements = locationData.value.reduce((needElements, item) => {
+
         if (['MaxT', 'MinT', 'Wx'].includes(item.elementName)) {
           const weekWeather = item.time.filter(element => {
             return element.startTime.includes('06:00')
           })
+
           needElements[item.elementName] = weekWeather
         }
 
         return needElements
-      }, [])
-
+      }, {})
 
       forecastWeatherData.value = [
-        weatherElements.MaxT,
-        weatherElements.MinT,
-        weatherElements.Wx
+        ...weatherElements.MaxT,
+        ...weatherElements.MinT,
+        ...weatherElements.Wx
       ]
 
-
-      // console.log("🚀 ~ file: getWeather.js ~ line 86 ~ getForecastWeather ~ forecastWeatherData.value", forecastWeatherData.value)
+      //Group by startTime
+      forecastWeatherGroupBy.value = forecastWeatherData.value.reduce((elements, item) => {
+        elements[item.startTime] = elements[item.startTime] || [];
+        elements[item.startTime].push(item.elementValue);
+        return elements;
+      }, [])
 
     } catch (error) {
       console.log(error)
     }
-
-
   }
-  return { currentWeatherData, getCurrentWeather, getForecastWeather, forecastWeatherData }
+
+
+
+  return { currentWeatherData, getCurrentWeather, getForecastWeather, forecastWeatherData, forecastWeatherGroupBy }
 }
+
 
 
 
