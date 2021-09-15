@@ -8,7 +8,6 @@ const getWeather = () => {
   const currentWeatherData = ref({})
   const forecastWeatherData = ref([])
   const forecastWeatherGroupBy = ref([])
-  const dailyWeather = ref([])
 
   const getCurrentWeather = async (city) => {
     const base = `https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001`
@@ -56,8 +55,14 @@ const getWeather = () => {
             return element.startTime.includes('06:00')
           })
 
+
           needElements[item.elementName] = weekWeather
         }
+
+
+        // if (item.elementName === 'Wx') {
+        //   needElements[item.elementName] = 
+        // }
 
         return needElements
       }, {})
@@ -74,6 +79,7 @@ const getWeather = () => {
         elements[item.startTime].push(item.elementValue);
         return elements;
       }, [])
+
 
     } catch (error) {
       console.log(error)

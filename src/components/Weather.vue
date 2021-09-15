@@ -27,63 +27,18 @@
             </option>
           </select>
         </form>
-        <span>{{ cityName }}</span>
       </div>
       <div class="weather-card-description">
         <span class="weather-icon">{{ currentWeatherData.description }}</span>
-        <span class="weather-temp">{{ currentWeatherData.temperature }}</span>
-        <div
-          class="weather-forecast-date"
-          v-for="forecast in weekDate"
-          :key="forecast"
-        >
-          <span>{{ forecast }}</span>
-        </div>
+        <span class="weather-temp">{{ currentWeatherData.temperature }}°</span>
+      </div>
 
-        <div class="weather-forecast">
-          <div
-            class="weather-forecast-daily"
-            v-for="forecast in weatherDay[1]"
-            :key="forecast"
-          >
-            <span>{{ forecast[0].value }}</span>
-          </div>
-          <div
-            class="weather-forecast-daily"
-            v-for="forecast in weatherDay[2]"
-            :key="forecast"
-          >
-            <span>{{ forecast[0].value }}</span>
-          </div>
-          <div
-            class="weather-forecast-daily"
-            v-for="forecast in weatherDay[3]"
-            :key="forecast"
-          >
-            <span>{{ forecast[0].value }}</span>
-          </div>
-          <div
-            class="weather-forecast-daily"
-            v-for="forecast in weatherDay[4]"
-            :key="forecast"
-          >
-            <span>{{ forecast[0].value }}</span>
-          </div>
-          <div
-            class="weather-forecast-daily"
-            v-for="forecast in weatherDay[5]"
-            :key="forecast"
-          >
-            <span>{{ forecast[0].value }}</span>
-          </div>
-          <div
-            class="weather-forecast-daily"
-            v-for="forecast in weatherDay[6]"
-            :key="forecast"
-          >
-            <span>{{ forecast[0].value }}</span>
-          </div>
-        </div>
+      <div class="weather-forecast">
+        <WeatherForecast
+          :dailyWeather="dailyWeather"
+          :date="date"
+          :currentWeatherCode="currentWeatherCode"
+        />
       </div>
     </div>
   </div>
@@ -93,8 +48,10 @@
 import { computed, ref } from "@vue/reactivity";
 import getWeather from "../composables/getWeather";
 import cityLocation from "../../data/cityData";
+import WeatherForecast from "./WeatherForecast.vue";
 
 export default {
+  components: { WeatherForecast },
   setup() {
     const {
       currentWeatherData,
@@ -109,6 +66,9 @@ export default {
     const cityData = ref([]);
     const cityName = ref("臺北市");
     const dailyWeather = ref([]);
+    const date = ref([]);
+    const currentWeatherCode = ref([]);
+    const weatherForecast = ref(null);
 
     cityData.value = cityLocation;
 
@@ -118,6 +78,7 @@ export default {
 
     const handleSubmit = (cityName) => {
       dailyWeather.value = [];
+
       getForecastWeather(cityName);
       cityData.value.filter((city) => {
         if (city.cityName === cityName) {
@@ -131,19 +92,19 @@ export default {
     getCurrentWeather(city.value);
     getForecastWeather(cityName.value);
 
-    // forecast date
-    const weekDate = computed(() => {
-      return Object.keys(forecastWeatherGroupBy.value).map((day) =>
-        day.slice(5, 10)
-      );
-    });
-
     // forecast data
+
     const weatherDay = computed(() => {
-      for (const key in forecastWeatherGroupBy.value) {
-        dailyWeather.value.push(forecastWeatherGroupBy.value[key]);
-      }
-      return dailyWeather.value;
+      dailyWeather.value = [];
+      date.value = [];
+      currentWeatherCode.value = [];
+      Object.entries(forecastWeatherGroupBy.value).forEach(([key, value]) => {
+        date.value.push(key.slice(5, 10));
+        dailyWeather.value.push(value);
+        currentWeatherCode.value.push(value[2][1].value);
+      });
+
+      return [dailyWeather, date, currentWeatherCode];
     });
 
     return {
@@ -155,11 +116,10 @@ export default {
       forecastWeatherData,
       cityData,
       cityName,
-      forecastWeatherGroupBy,
-      weekDate,
       dailyWeather,
       weatherDay,
-      dailyWeather,
+      date,
+      currentWeatherCode,
     };
   },
 };
@@ -180,7 +140,7 @@ span {
 .weather-card {
   width: 80%;
   border-radius: 20px;
-  background: white;
+  background: whitesmoke;
   text-align: center;
   margin: 5px;
   align-self: flex-end;
@@ -193,5 +153,40 @@ span {
 
 .weather-card span {
   color: black;
+}
+
+.weather-card-description {
+  margin: 1rem 0;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.weather-forecast {
+  display: flex;
+  border-top: 1px solid #80808078;
+  border-bottom: 1px solid #80808078;
+  padding: 0.5rem 0;
+  font-size: 0.5rem;
+}
+
+.weather-forecast-daily .daily-detail {
+  display: flex;
+  margin: 5px;
+}
+.weather-forecast-daily .day {
+  margin: 2px;
+}
+
+form > select {
+  border: none;
+  background-color: whitesmoke;
+  font-size: 1.2rem;
+}
+
+svg {
+  width: 20px;
+  height: 20px;
 }
 </style>

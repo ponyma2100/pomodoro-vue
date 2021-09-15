@@ -75,5 +75,7 @@ html {
   flex-direction: column;
   max-width: 500px;
   width: 80%;
+  max-height: 300px;
+  height: 50%;
 }
 </style>
