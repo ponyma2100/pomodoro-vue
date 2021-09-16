@@ -1,6 +1,6 @@
 <template>
   <div class="weather">
-    <div class="weather-dash" @click="handleClick">
+    <section class="weather-dash" @click="handleClick">
       <div class="weather-dash-data">
         <span class="weather-dash-icon">{{
           currentWeatherData.description
@@ -13,8 +13,8 @@
       <div class="weather-location">
         <span>{{ cityName }}</span>
       </div>
-    </div>
-    <div class="weather-card" v-show="showCard">
+    </section>
+    <section class="weather-card" v-show="showCard">
       <div class="weather-card-location">
         <form @change.prevent="handleSubmit(cityName)">
           <select v-model="cityName">
@@ -38,9 +38,10 @@
           :dailyWeather="dailyWeather"
           :date="date"
           :currentWeatherCode="currentWeatherCode"
+          :weatherDay="weatherDay"
         />
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -68,7 +69,7 @@ export default {
     const dailyWeather = ref([]);
     const date = ref([]);
     const currentWeatherCode = ref([]);
-    const weatherForecast = ref(null);
+    const currentWeatherIcon = ref([]);
 
     cityData.value = cityLocation;
 
@@ -78,6 +79,7 @@ export default {
 
     const handleSubmit = (cityName) => {
       dailyWeather.value = [];
+      currentWeatherIcon.value = [];
 
       getForecastWeather(cityName);
       cityData.value.filter((city) => {

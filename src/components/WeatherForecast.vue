@@ -1,17 +1,24 @@
 <template>
-  <div class="date" v-for="day in date" :key="day">{{ day }}</div>
-  <div
-    class="weather-forecast-daily"
-    v-for="forecast in dailyWeather"
-    :key="forecast"
-  >
-    <div class="daily-detail" v-for="week in forecast" :key="week">
-      <div class="daily" v-for="day in week" :key="day">
-        <span>{{ day.value }}</span>
+  <section class="date">
+    <h3 v-for="day in date" :key="day">{{ day }}</h3>
+  </section>
+  <section class="weather-forecast-daily">
+    <span
+      class="weather-forecast-daily"
+      v-for="forecast in dailyWeather"
+      :key="forecast"
+    >
+      <div class="daily-detail" v-for="week in forecast" :key="week">
+        <div class="daily" v-for="day in week" :key="day">
+          <span>{{ day.value }}</span>
+        </div>
       </div>
-    </div>
-  </div>
-  <WeatherIcon :currentWeatherCode="currentWeatherCode" />
+    </span>
+  </section>
+  <WeatherIcon
+    :currentWeatherCode="currentWeatherCode"
+    :weatherDay="weatherDay"
+  />
 </template>
 
 <script>
@@ -19,7 +26,7 @@ import WeatherIcon from "./WeatherIcon.vue";
 
 export default {
   components: { WeatherIcon },
-  props: ["dailyWeather", "date", "currentWeatherCode"],
+  props: ["dailyWeather", "date", "currentWeatherCode", "weatherDay"],
   setup(props) {},
 };
 </script>

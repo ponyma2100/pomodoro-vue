@@ -1,5 +1,5 @@
 <template>
-  <div class="icon" v-for="icon in currentWeatherIcon" :key="icon">
+  <div class="icon" v-for="icon in currentWeatherIcon" :key="icon.index">
     <svg>
       <use :xlink:href="icon" />
     </svg>
@@ -17,9 +17,10 @@ import "../assets/icon/day-snowing.svg";
 import "../assets/icon/day-thunderstorm.svg";
 
 export default {
-  props: ["currentWeatherCode"],
+  props: ["currentWeatherCode", "weatherDay"],
   setup(props) {
     const currentWeatherIcon = ref([]);
+    currentWeatherIcon.value = [];
 
     const weatherTypes = {
       isThunderstorm: [15, 16, 17, 18, 21, 22, 33, 34, 35, 36, 41],
@@ -57,14 +58,18 @@ export default {
     //return daily weathericon
     const singleIcon = computed(() => {
       currentWeatherIcon.value = [];
+      console.log("🚀11111", currentWeatherIcon.value);
+
       props.currentWeatherCode.map((code) => {
-        currentWeatherIcon.value.push(weatherIcons[weatherCode2Type(code)]);
-        return currentWeatherIcon;
+        const weatherIcon = weatherIcons[weatherCode2Type(code)];
+
+        currentWeatherIcon.value.push(weatherIcon);
       });
+      console.log("🚀22222", currentWeatherIcon.value);
+      return [currentWeatherIcon];
     });
 
     return {
-      weatherCode2Type,
       singleIcon,
       currentWeatherIcon,
     };
