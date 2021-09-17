@@ -17,6 +17,7 @@
   </section>
   <WeatherIcon
     :currentWeatherCode="currentWeatherCode"
+    :currentWeatherIcon="currentWeatherIcon"
     :weatherDay="weatherDay"
   />
 </template>
@@ -26,7 +27,7 @@ import WeatherIcon from "./WeatherIcon.vue";
 
 export default {
   components: { WeatherIcon },
-  props: ["dailyWeather", "date", "currentWeatherCode", "weatherDay"],
+  props: ["dailyWeather", "date", "currentWeatherIcon"],
   setup(props) {},
 };
 </script>

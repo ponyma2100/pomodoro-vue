@@ -38,7 +38,7 @@
           :dailyWeather="dailyWeather"
           :date="date"
           :currentWeatherCode="currentWeatherCode"
-          :weatherDay="weatherDay"
+          :currentWeatherIcon="currentWeatherIcon"
         />
       </div>
     </section>
@@ -49,6 +49,7 @@
 import { computed, ref } from "@vue/reactivity";
 import getWeather from "../composables/getWeather";
 import cityLocation from "../../data/cityData";
+import weatherIconMapping from "../../data/weatherIconMapping";
 import WeatherForecast from "./WeatherForecast.vue";
 
 export default {
@@ -70,8 +71,10 @@ export default {
     const date = ref([]);
     const currentWeatherCode = ref([]);
     const currentWeatherIcon = ref([]);
+    const iconMapping = ref([]);
 
     cityData.value = cityLocation;
+    iconMapping.value = weatherIconMapping;
 
     const handleClick = () => {
       showCard.value = !showCard.value;
@@ -109,6 +112,30 @@ export default {
       return [dailyWeather, date, currentWeatherCode];
     });
 
+    //weatherCode weatherType mapping
+    const weatherCode2Type = (weatherCode) => {
+      const [weatherType] =
+        Object.entries(iconMapping.value.weatherTypes).find(
+          ([weatherType, weatherCodes]) =>
+            weatherCodes.includes(Number(weatherCode))
+        ) || [];
+
+      return weatherType;
+    };
+
+    //return daily weathericon
+    const singleIcon = computed(() => {
+      currentWeatherIcon.value = [];
+
+      currentWeatherCode.value.map((code) => {
+        const weatherIcon =
+          iconMapping.value.weatherIcons[weatherCode2Type(code)];
+        currentWeatherIcon.value.push(weatherIcon);
+      });
+
+      return currentWeatherIcon;
+    });
+
     return {
       currentWeatherData,
       handleClick,
@@ -122,6 +149,8 @@ export default {
       weatherDay,
       date,
       currentWeatherCode,
+      currentWeatherIcon,
+      singleIcon,
     };
   },
 };
