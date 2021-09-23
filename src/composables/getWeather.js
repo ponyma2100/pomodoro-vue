@@ -73,12 +73,14 @@ const getWeather = () => {
         ...weatherElements.Wx
       ]
 
+
       //Group by startTime
       forecastWeatherGroupBy.value = forecastWeatherData.value.reduce((elements, item) => {
         elements[item.startTime] = elements[item.startTime] || [];
         elements[item.startTime].push(item.elementValue);
         return elements;
-      }, [])
+      }, {})
+
 
 
     } catch (error) {

@@ -2,9 +2,9 @@
   <section class="date">
     <h3 v-for="day in date" :key="day">{{ day }}</h3>
   </section>
-  <section class="weather-forecast-daily">
-    <span
-      class="weather-forecast-daily"
+  <section class="forecast-daily">
+    <div
+      class="forecast-daily-detail"
       v-for="forecast in dailyWeather"
       :key="forecast"
     >
@@ -13,7 +13,7 @@
           <span>{{ day.value }}</span>
         </div>
       </div>
-    </span>
+    </div>
   </section>
   <WeatherIcon
     :currentWeatherCode="currentWeatherCode"

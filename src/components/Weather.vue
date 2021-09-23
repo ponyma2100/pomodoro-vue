@@ -78,6 +78,8 @@ export default {
 
     const handleClick = () => {
       showCard.value = !showCard.value;
+      weatherDay.value;
+      singleIcon.value;
     };
 
     const handleSubmit = (cityName) => {
@@ -103,13 +105,13 @@ export default {
       dailyWeather.value = [];
       date.value = [];
       currentWeatherCode.value = [];
+
       Object.entries(forecastWeatherGroupBy.value).forEach(([key, value]) => {
         date.value.push(key.slice(5, 10));
         dailyWeather.value.push(value);
         currentWeatherCode.value.push(value[2][1].value);
       });
-
-      return [dailyWeather, date, currentWeatherCode];
+      return { dailyWeather, date, currentWeatherCode };
     });
 
     //weatherCode weatherType mapping
