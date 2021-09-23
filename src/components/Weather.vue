@@ -39,6 +39,7 @@
           :date="date"
           :currentWeatherCode="currentWeatherCode"
           :currentWeatherIcon="currentWeatherIcon"
+          :weatherDay="weatherDay"
         />
       </div>
     </section>
@@ -84,9 +85,10 @@ export default {
 
     const handleSubmit = (cityName) => {
       dailyWeather.value = [];
+      currentWeatherCode.value = [];
       currentWeatherIcon.value = [];
-
       getForecastWeather(cityName);
+
       cityData.value.filter((city) => {
         if (city.cityName === cityName) {
           city.value = city.locationName;
@@ -94,6 +96,9 @@ export default {
           return city.locationName;
         }
       });
+
+      weatherDay.value;
+      singleIcon.value;
     };
 
     getCurrentWeather(city.value);
@@ -108,7 +113,7 @@ export default {
 
       Object.entries(forecastWeatherGroupBy.value).forEach(([key, value]) => {
         date.value.push(key.slice(5, 10));
-        dailyWeather.value.push(value);
+        dailyWeather.value.push(value.slice(0, 2));
         currentWeatherCode.value.push(value[2][1].value);
       });
       return { dailyWeather, date, currentWeatherCode };
@@ -201,16 +206,17 @@ span {
   border-top: 1px solid #80808078;
   border-bottom: 1px solid #80808078;
   padding: 0.5rem 0;
-  font-size: 0.5rem;
+  flex-direction: column;
+  width: 100%;
 }
 
-.weather-forecast-daily .daily-detail {
+/* .weather-forecast-daily .daily-detail {
   display: flex;
   margin: 5px;
 }
 .weather-forecast-daily .day {
   margin: 2px;
-}
+} */
 
 form > select {
   border: none;

@@ -32,7 +32,6 @@ const getWeather = () => {
         temperature: weatherElements.TEMP
       }
 
-      // console.log("🚀 ~ file: getWeather.js ~ line 12 ~ getWeather ~ data.value", currentWeatherData.value)
     } catch (error) {
       console.log(error)
     }
@@ -55,14 +54,8 @@ const getWeather = () => {
             return element.startTime.includes('06:00')
           })
 
-
           needElements[item.elementName] = weekWeather
         }
-
-
-        // if (item.elementName === 'Wx') {
-        //   needElements[item.elementName] = 
-        // }
 
         return needElements
       }, {})
@@ -73,13 +66,13 @@ const getWeather = () => {
         ...weatherElements.Wx
       ]
 
-
       //Group by startTime
       forecastWeatherGroupBy.value = forecastWeatherData.value.reduce((elements, item) => {
         elements[item.startTime] = elements[item.startTime] || [];
         elements[item.startTime].push(item.elementValue);
         return elements;
       }, {})
+
 
 
 

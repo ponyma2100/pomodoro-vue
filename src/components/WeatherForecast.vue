@@ -1,6 +1,6 @@
 <template>
-  <section class="date">
-    <h3 v-for="day in date" :key="day">{{ day }}</h3>
+  <section class="forecast-date">
+    <h4 v-for="day in date" :key="day">{{ day }}</h4>
   </section>
   <section class="forecast-daily">
     <div
@@ -15,11 +15,13 @@
       </div>
     </div>
   </section>
-  <WeatherIcon
-    :currentWeatherCode="currentWeatherCode"
-    :currentWeatherIcon="currentWeatherIcon"
-    :weatherDay="weatherDay"
-  />
+  <div class="forecast-icon">
+    <WeatherIcon
+      :currentWeatherCode="currentWeatherCode"
+      :currentWeatherIcon="currentWeatherIcon"
+      :weatherDay="weatherDay"
+    />
+  </div>
 </template>
 
 <script>
@@ -33,4 +35,18 @@ export default {
 </script>
 
 <style>
+.forecast-date {
+  display: flex;
+  justify-content: space-between;
+}
+
+.forecast-daily {
+  display: flex;
+  justify-content: space-around;
+}
+
+.forecast-icon {
+  display: flex;
+  justify-content: space-around;
+}
 </style>
