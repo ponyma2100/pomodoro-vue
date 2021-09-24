@@ -2,9 +2,11 @@
   <div class="weather">
     <section class="weather-dash" @click="handleClick">
       <div class="weather-dash-data">
-        <span class="weather-dash-icon">{{
-          currentWeatherData.description
-        }}</span>
+        <span
+          class="weather-dash-description"
+          v-if="currentWeatherData.description !== '-99'"
+          >{{ currentWeatherData.description }}</span
+        >
         <span class="weather-dash-temp">{{
           currentWeatherData.temperature
         }}</span>
@@ -29,7 +31,11 @@
         </form>
       </div>
       <div class="weather-card-description">
-        <span class="weather-icon">{{ currentWeatherData.description }}</span>
+        <span
+          class="weather-icon"
+          v-if="currentWeatherData.description !== '-99'"
+          >{{ currentWeatherData.description }}</span
+        >
         <span class="weather-temp">{{ currentWeatherData.temperature }}°</span>
       </div>
 

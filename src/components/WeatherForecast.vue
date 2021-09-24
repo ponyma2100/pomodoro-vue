@@ -43,10 +43,12 @@ export default {
 .forecast-daily {
   display: flex;
   justify-content: space-around;
+  margin: 0 -10px;
 }
 
 .forecast-icon {
   display: flex;
   justify-content: space-around;
+  margin: 0 -10px;
 }
 </style>
