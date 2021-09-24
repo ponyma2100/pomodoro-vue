@@ -3,8 +3,8 @@
     <div class="progress" :style="{ width: `${width}%` }"></div>
   </div>
   <div class="timer">
-    <span class="showdisplay" v-if="showTime">{{ display }}</span>
-    <div v-else class="input-time">
+    <div class="showdisplay" v-show="showTime">{{ display }}</div>
+    <div v-show="!showTime" class="input-time">
       <input
         v-model="setTime"
         type="number"
@@ -72,6 +72,7 @@ export default {
         if (remaining < 0) {
           clearInterval(countdownActive);
           showTime.value = false;
+          alert("Time's up!");
         } else {
           render(remaining);
         }
@@ -167,6 +168,8 @@ export default {
 
 .showdisplay {
   height: 150px;
+  width: 360px;
+  color: white;
 }
 </style>>
 
