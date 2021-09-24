@@ -3,7 +3,7 @@
     <div class="progress" :style="{ width: `${width}%` }"></div>
   </div>
   <div class="timer">
-    <span v-if="showTime">{{ display }}</span>
+    <span class="showdisplay" v-if="showTime">{{ display }}</span>
     <div v-else class="input-time">
       <input
         v-model="setTime"
@@ -163,6 +163,10 @@ export default {
   height: 0.4rem;
   background-color: white;
   transition: width 0.4s ease;
+}
+
+.showdisplay {
+  height: 150px;
 }
 </style>>
 
