@@ -1,6 +1,6 @@
 import { ref } from "vue"
 
-const authorization = 'CWB-042511E5-4B1B-4F0B-B0E0-678048C3471E'
+const authorization = process.env.VUE_APP_APIKEY
 
 
 const getWeather = () => {
