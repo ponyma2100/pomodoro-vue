@@ -1,5 +1,7 @@
 # pomodoro-vue
 
+https://ponyma2100.github.io/pomodoro-vue/
+
 ## Project setup
 ```
 npm install
