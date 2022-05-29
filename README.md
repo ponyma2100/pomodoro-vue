@@ -2,6 +2,8 @@
 
 https://ponyma2100.github.io/pomodoro-vue/
 
+<img src="https://raw.githubusercontent.com/ponyma2100/pomodoro-vue/master/pomodoro-1.png" alt="Cover" width="80%"/>
+
 ## Project setup
 ```
 npm install
